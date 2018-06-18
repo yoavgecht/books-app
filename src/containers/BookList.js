@@ -84,17 +84,19 @@ class BookList extends Component {
     renderList(){
         return this.props.books.map((book, index) => {
             return (
-                <div key={book.id} className="col-sm-12">
+                <div key={book.id} className="col-sm-12 col-md-4">
                     <div className="card text-center">
                         <div className="card-header">
                             <i className="fa fa-close" data-toggle="modal" data-target="#booksModal" onClick={() => this.showDeleteModal(index)}></i>
                         </div>
                          <div className="card-body">
-                            {book.volumeInfo && <h2 className="card-title">{book.volumeInfo.title}</h2>}
-                           
-                            {book.volumeInfo && <h4>{moment(book.volumeInfo.publishedDate).format("DD/MM/YYYY")}</h4>}
+                            {book.volumeInfo && <h3 className="card-title">{book.volumeInfo.title}</h3>}
+                            {book.volumeInfo.imageLinks ? <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> : <img src="https://store.lexisnexis.com/__data/assets/image/0003/26571/dummy_cover.jpg" alt={book.volumeInfo.title} width="128" height="203" />}
+                            <br/><br/>
+                            <h6>Published Date:</h6>
+                            {book.volumeInfo && <h5>{moment(book.volumeInfo.publishedDate).format("DD/MM/YYYY")}</h5>}
                          </div>
-                        <button className="btn btn-primary" data-toggle="modal" data-target="#booksModal" onClick={() => this.showEditModal(index)}>Edit Book</button>
+                        <button className="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#booksModal" onClick={() => this.showEditModal(index)}>Edit Book</button>
                     </div>
                 </div>
             )
@@ -105,13 +107,20 @@ class BookList extends Component {
         return (
             <div className="container">
                  <div className="row">
-                     <input className="form-control" type="text" placeholder="Search a book"  onChange={(e) => this.onInputChangeHandler(search(e.target.value))} />
-                    {this.props.books ? this.renderList(): null}
-                </div>
-                <div>
-                     <button className="btn btn-primary" data-toggle="modal" data-target="#booksModal" onClick={() => this.showAddModal()}>Add Book</button>
+                    <div className="col-sm-12">
+                         <input className="form-control" type="text" placeholder="Search a book"  onChange={(e) => this.onInputChangeHandler(search(e.target.value))} />
+                    </div>
+                  </div>
+                  <div className="row">
+                        {this.props.books ? this.renderList(): null}
+                    </div> 
+                {this.props.books && <div className="row">
+                    <div className="col-sm-12">
+                        <button className="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#booksModal" onClick={() => this.showAddModal()}>Add Book</button>                        
+                    </div>
+                </div> }
                    
-                </div>
+               
                 {this.props.modal ? <ModalRoot modalType={this.state.modalType} checkValidation={this.checkValidation} errors={this.state.errors} /> : null}
             </div>
            
