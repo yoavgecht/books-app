@@ -84,7 +84,7 @@ class BookList extends Component {
     renderList(){
         return this.props.books.map((book, index) => {
             return (
-                <div key={book.id} className="col-sm-12 col-md-4">
+                <div key={book.id} className="col-sm-12 col-md-3">
                     <div className="card text-center">
                         <div className="card-header">
                             <i className="fa fa-close" data-toggle="modal" data-target="#booksModal" onClick={() => this.showDeleteModal(index)}></i>
